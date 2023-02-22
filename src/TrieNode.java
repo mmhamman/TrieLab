@@ -9,4 +9,13 @@ public class TrieNode {
         isWord = false;
     }
 
+    boolean isEmpty() {
+        for(TrieNode node : children) {
+            if (node != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

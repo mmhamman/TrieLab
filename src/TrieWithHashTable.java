@@ -76,6 +76,27 @@ public class TrieWithHashTable {
 
     }
 
+    void delete(String word) {
+        deleteHelper(root, word);
+    }
+
+    void deleteHelper(TrieNodeWHashTable node, String word) {
+
+        // if we are at th end of the word
+        if (word.length() <= 0) {
+            node.isWord = false;
+            return;
+        }
+
+        deleteHelper(node.children.get(word.charAt(0)), word.substring(1));
+
+        // if the node below is not the end of a word AND does not have any children meaning it's a false leaf
+        if (!node.children.get(word.charAt(0)).isWord && node.children.get(word.charAt(0)).children.isEmpty()) {
+            node.children.remove(word.charAt(0));
+            return;
+        }
+    }
+
 
     public static void main( String [] args) {
         TrieWithHashTable trie = new TrieWithHashTable();
@@ -90,6 +111,14 @@ public class TrieWithHashTable {
 
         System.out.println(trie.search("cat"));
         System.out.println(trie.search("ca"));
+        System.out.println(trie.search("a"));
+
+        System.out.println(trie.search("aqua"));
+        trie.delete("aqua");
+        System.out.println(trie.search("aqua"));
+        trie.insert("ant");
+        System.out.println(trie.search("ant"));
+
 
     }
 

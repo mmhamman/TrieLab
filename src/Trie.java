@@ -88,6 +88,29 @@ public class Trie {
 
     }
 
+    void delete(String word) {
+        deleteHelper(root, word);
+    }
+
+    void deleteHelper(TrieNode node, String word) {
+
+        // if we are at th end of the word
+        if (word.length() <= 0) {
+            node.isWord = false;
+            return;
+        }
+
+        int index = word.charAt(0) - 'a';
+
+        deleteHelper(node.children[index], word.substring(1));
+
+        // if the node below is not the end of a word AND does not have any children meaning it's a false leaf
+        if (!node.children[index].isWord && node.children[index].isEmpty()) {
+            node.children[index] = null;
+            return;
+        }
+    }
+
 
 
     public static void main( String [] args) {
@@ -103,6 +126,12 @@ public class Trie {
 
         System.out.println(trie.search("cat"));
         System.out.println(trie.search("ca"));
+
+        System.out.println(trie.search("aqua"));
+        trie.delete("aqua");
+        System.out.println(trie.search("aqua"));
+        trie.insert("ant");
+        System.out.println(trie.search("ant"));
 
     }
 
